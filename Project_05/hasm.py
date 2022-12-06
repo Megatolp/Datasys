@@ -27,7 +27,8 @@ def Pass1(sourceFile):
             address += 1
         elif commandType == L_COMMAND:
             if not symbolTable.Contains(parser.symbol):
-                symbolTable.AddEntry(symbol=parser.symbol,value=parser.lineNumber)
+                # FEL ADRESS; KOLLA I ROM
+                symbolTable.AddEntry(symbol=parser.symbol,value=address)
             else:
                 Error("Error duplicate addresses",parser.lineNumber,parser.rawline)
             pass
