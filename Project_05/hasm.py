@@ -26,6 +26,10 @@ def Pass1(sourceFile):
         elif commandType in (A_COMMAND, C_COMMAND):
             address += 1
         elif commandType == L_COMMAND:
+            if not symbolTable.Contains(parser.symbol):
+                symbolTable.AddEntry(symbol=parser.symbol,value=parser.lineNumber)
+            else:
+                Error("Error duplicate addresses",parser.lineNumber,parser.rawline)
             pass
 #################################################################################
 # To be completed:

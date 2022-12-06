@@ -2,7 +2,13 @@
 AM =D+M;JMP
 
 
-(loop)
 (ASAS)
+@loop
+0;JMP
+(loop)
+(loop)
+(loop)
+
+
 @loop
 0;JMP

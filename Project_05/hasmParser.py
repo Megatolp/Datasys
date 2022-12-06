@@ -176,7 +176,7 @@ class Parser(object):
 
     def _ParseDest(self):
         #MIN
-        # M=A+D; 
+        #  (M)  =A+D; 
         self.dest = ''
         dest = self.line
         i = dest.find("=")
