@@ -1,0 +1,59 @@
+Hopplogik
+
+null
+JGT  
+JEQ
+JLE
+JGE
+JNE
+JLE
+JMP
+
+
+Hur man gör en loop i asm:
+(loop)
+
+//SAKER
+//SAKER
+//SAKER
+//SAKER
+//SAKER
+
+//Om @1 > 0; gå ut ur loopen
+@1
+D=M // D = värdet i @1
+@notloop // sätter @notloop som jump dest
+D;JGT // hoppa till @notloop om D>0
+
+@loop
+0;JMP
+
+(notloop)
+
+
+
+Lite vanliga operationer:
+// D=10
+@10
+D=A
+
+// D++
+D=D+1
+
+// D=RAM[17]
+@17
+D=M
+
+// RAM[17]=D
+@17
+M=D
+
+// RAM[17]=10
+@10
+D=A
+@17
+M=D
+
+
+http://www.jk-quantized.com/experiments/HomebrewComputer/Cheatsheets/hackASM.html 
+https://zhangruochi.com/Machine-Language/2019/09/22/14.png 

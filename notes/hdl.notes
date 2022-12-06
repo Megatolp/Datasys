@@ -1,0 +1,28 @@
+//Xor kommer kanske inte fungera, måste flytta grejorna till en annan mapp
+
+
+// Branching, splitta output 
+    // Kan vara bra om du bara vill ha en del av outputen i ett chip
+    // Kan användas för att namnge samma output till två olika saker för att namnge bättre
+
+Or16(a=In, b=In2, out[0..7]=signedbit,out=out, out[8..15]=other8);
+// out = 1000001010011
+//other16 = 1000001010011
+// signedbit = 1
+
+
+//Project 3
+
+//Bit(in, load)
+tar input i in, ger output out nästa cykel
+
+
+
+
+// Kör or mellan alla 8, bra för att kolla om alla bitar från ett register är noll
+//Or8way(in=0000000001 out=1)
+Or8Way(in=, out=);
+
+
+//CPU
+// Instruction :(if c) type 15  ||  ?,?,AorM   || zx,nx,zy,ny,f,no 6-11 || loadA,loadD,WriteM  3-5|| JEQ, JLE, JGE 0-2
