@@ -125,18 +125,8 @@ class CodeWriter(object):
 
     def WritePushPop(self, commandType, segment, index):
         if commandType == C_PUSH:
-            if segment != T_CONSTANT:
-                lines = [
-                    f"@{SEGMENT_MAP[segment] + int(index)}",
-                    "D=M",
-                    #Opens RAM att sp
-                    "@0",
-                    "A=M",
-                    "M=D",
-                    "@0",
-                    "M=M+1"
-                ]
-            else:
+            print(segment)
+            if segment == T_CONSTANT:
                 lines = [
 
                     f"@{index}",
@@ -148,14 +138,67 @@ class CodeWriter(object):
                     "@0",
                     "M=M+1"
                 ]
+            elif segment == "temp":
+                lines = [
+
+                    f"@{SEGMENT_MAP[segment] + int(index)}",
+                    "D=M",
+                    #Opens RAM att sp
+                    "@0",
+                    "A=M",
+                    "M=D",
+                    "@0",
+                    "M=M+1"
+                ]
+
+            else:
+                # Open value at segment map, add {index} to value, then push to stack
+                lines = [
+                    # Opens segment
+                    f"@{SEGMENT_MAP[segment]}",
+                    "D=M",
+                    # Adds index
+                    f"@{int(index)}",
+                    "A=D+A",
+                    "D=M",
+                    #Opens RAM att sp
+                    "@0",
+                    "A=M",
+                    "M=D",
+                    "@0",
+                    "M=M+1"
+                ]
         elif commandType == C_POP:
-            lines = [
-                "@0",
-                "AM=M-1",
-                "D=M",
-                f"@{SEGMENT_MAP[segment] + int(index)}",
-                "M=D"
-            ]
+            #print(segment)
+            if segment == "temp":
+                lines = [
+                    # Gets first value before sp and saves to D
+                    "@0",
+                    "AM=M-1",
+                    "D=M",
+                    # Opens at temp-start + index
+                    f"@{SEGMENT_MAP[segment]+int(index)}",
+                    "M=D"
+                ]
+            else:
+                lines = [
+                    # Opens at segment, adds index and saves address to R13
+                    f"@{SEGMENT_MAP[segment]}",
+                    "D=M",
+                    # Adds index
+                    f"@{int(index)}",
+                    "D=D+A",
+                    "@R13",  
+                    "M=D",
+
+                    # Gets first value before sp and saves to adress stored in R13
+                    "@0",
+                    "AM=M-1",
+                    "D=M",
+                    "@R13",
+                    "A=M",
+                    "M=D"
+                ]
 
 
         for line in lines:
@@ -175,7 +218,7 @@ class CodeWriter(object):
         """
         
     def WriteArithmetic(self, command):
-        print(command)
+        #print(command)
         arithmeticString = ""
         operand = ""
         arithmetic_table = {
@@ -220,9 +263,11 @@ class CodeWriter(object):
         D=M
         A=A-1
         D=M-D
-        M=1
+        M=-1
         @label{self.labelNumber}
         D;{operand}
+        @0
+        A=M-1
         M=0
         (label{self.labelNumber})
         '''
@@ -233,7 +278,7 @@ class CodeWriter(object):
         elif command in (T_EQ, T_GT, T_LT):
             self.labelNumber += 1
             arithmeticString = conditional
-        print(arithmeticString)
+        #print(arithmeticString)
         self.file.write(arithmeticString)
             
 
