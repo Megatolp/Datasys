@@ -66,10 +66,11 @@ SEGMENT_MAP = {
     "pointer":0,
     "local":1,
     "argument":2,
+    "pointer":3,
     "this":3,
     "that":4,
     "temp":5,
-    "static":"__?__"
+    "static":16
 
 }
 '''

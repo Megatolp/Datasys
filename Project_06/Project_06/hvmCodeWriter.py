@@ -150,7 +150,6 @@ class CodeWriter(object):
                     "@0",
                     "M=M+1"
                 ]
-
             else:
                 # Open value at segment map, add {index} to value, then push to stack
                 lines = [
