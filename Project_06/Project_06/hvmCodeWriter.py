@@ -125,10 +125,9 @@ class CodeWriter(object):
 
     def WritePushPop(self, commandType, segment, index):
         if commandType == C_PUSH:
-            print(segment)
+            #print(segment)
             if segment == T_CONSTANT:
                 lines = [
-
                     f"@{index}",
                     "D=A",
                     #Opens RAM att sp
@@ -138,9 +137,8 @@ class CodeWriter(object):
                     "@0",
                     "M=M+1"
                 ]
-            elif segment == "temp":
+            elif segment == "temp" or segment == "pointer":
                 lines = [
-
                     f"@{SEGMENT_MAP[segment] + int(index)}",
                     "D=M",
                     #Opens RAM att sp
@@ -150,6 +148,22 @@ class CodeWriter(object):
                     "@0",
                     "M=M+1"
                 ]
+            elif segment == "this" or segment == "that" or segment == "local":
+                lines = [
+                    f"@{SEGMENT_MAP[segment]}",
+                    "D=M",
+                    f"@{index}",
+                    "D=D+A", #DONT WORK
+                    "A=D",
+                    "D=M",
+                    #Opens RAM att sp
+                    "@0",
+                    "A=M",
+                    "M=D",
+                    "@0",
+                    "M=M+1"
+                ]
+                print(segment, index, lines)
             else:
                 # Open value at segment map, add {index} to value, then push to stack
                 lines = [
@@ -179,6 +193,27 @@ class CodeWriter(object):
                     f"@{SEGMENT_MAP[segment]+int(index)}",
                     "M=D"
                 ]
+            elif segment == "pointer":
+                lines = [
+                    # Opens at segment, adds index and saves address to R13
+                    f"@{SEGMENT_MAP[segment]}",
+                    "D=A",
+                    # Adds index
+                    f"@{int(index)}",
+                    "D=D+A",
+                    "@R13",  
+                    "M=D",
+
+                    # Gets first value before sp and saves to adress stored in R13
+                    "@0",
+                    "AM=M-1",
+                    "D=M",
+                    "@R13",
+                    "A=M",
+                    "M=D"
+                ]
+
+
             else:
                 lines = [
                     # Opens at segment, adds index and saves address to R13
