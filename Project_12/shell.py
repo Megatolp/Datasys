@@ -24,7 +24,11 @@ def ls(argstring):
     ls_out = os.listdir(cwd)
     output = ""
     for file in ls_out:
-        output = output + file + "\n"
+        if os.path.isfile(file) or os.path.isfile(cwd + "\\" + file):
+            output = output + file + "\n"
+        else:
+            output = output + "DIR  " +  file + "\n"
+
     return output.strip()
 
 def pwd(argstring):
@@ -32,8 +36,10 @@ def pwd(argstring):
     return cwd
 
 
-def man(argstring):
-    pass
+def man(arglist):
+    command = arglist[0]
+    outmsg = man_dict[command]
+    return outmsg
 
 def cat(arglist):
     if len(arglist) > 1:
@@ -56,24 +62,53 @@ def head(arglist):
     output = ""
     if len(arglist)>1:
         rows = int(arglist[1])
-    with open(filename,"r") as readfile:
+    # To be able to read binary data too
+    with open(filename,"rb") as readfile:
         for i in range(rows):
-            output.appen(readfile.readline())
-    return output
+            output = output+ readfile.readline().decode()
+    return output.strip()
 
+def tail(arglist):
+    filename = arglist[0]
+    rows = 10
+    
+    output = ""
+    if len(arglist)>1:
+        rows = int(arglist[1])
+    # To be able to read binary data too
+    readlines = open(filename,"rb").readlines()[-rows:] 
+    for line in readlines:
+        output = output + line.decode()
+
+    return output.strip()
+    
 def touch(arglist):
     filename = arglist[0]
     open(filename,"x")
     return
 
-def rm(argstring):
+def rm(arglist):
+    filename = arglist[0]
+    os.remove(filename)
     pass
 
-def cp(argstring):
-    pass
-def mv(argstring):
-    pass
+def cp(arglist):
+    filesrc, filedst = arglist[0:2]
+    filebuffer = open(filesrc,"rb").read()
+    open(filedst,"x")
+    open(filedst,"wb").write(filebuffer)
+    return
 
+def mv(arglist):
+    cp(arglist)
+    filedst = arglist[1]
+    rm(arglist)
+    return
+def help(arglist):
+    output = ""
+    for key in man_dict.keys():
+        output = output + key + "\n"
+    return output.strip()
 
 def donot(argstring):
     print("\n")
@@ -88,9 +123,29 @@ command_list = {
     "cd":cd,
     "man":man,
     "head":head,
+    "tail":tail,
     "cat":cat,
     "touch":touch,
+    "rm":rm,
+    "cp":cp,
+    "mv":mv,
+    "help":help,
     "not":donot
+}
+
+man_dict = {
+    "echo":"prints out the user input",
+    "pwd":"prints current directory",
+    "ls":"lists contents of current directory",
+    "cd":"change current directory",
+    "man":"prints manual for command",
+    "head":"prints first lines of a file",
+    "cat":"prints contents of file",
+    "touch":"creates an empty file",
+    "rm":"prints current directory",
+    "cp":"prints current directory",
+    "mv":"prints current directory",
+    "not":"prints current directory",
 }
 
 print("Welcome to my shell")
@@ -113,7 +168,7 @@ while running:
                 output = command_list[user_command](user_argstring)
             else:
                 output = command_list[user_command](argparse(user_argstring))
-            if output != "":
+            if output != "" and output != None:
                 print(output)
         except Exception as E:
             print(E.args[-1])

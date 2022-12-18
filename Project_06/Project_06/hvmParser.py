@@ -62,7 +62,7 @@ class Parser(object):
         
         self.commandType = self.rawline.split()[0]
         self.commandType = firstword_dict[self.commandType]
-        print(self.commandType)
+        #print(self.commandType)
 
 
         """
@@ -83,10 +83,14 @@ class Parser(object):
         """
         Returns the command's first argument.
         """
-        if self.commandType in (C_POP, C_PUSH):
+        if self.commandType in (C_POP, C_PUSH, C_FUNCTION, C_CALL, C_LABEL, C_IF, C_GOTO):
             self.arg1 = self.rawline.split()[1]
-        elif self.commandType == C_ARITHMETIC:
+        elif self.commandType in (C_ARITHMETIC, C_CALL):
             self.arg1 = self.rawline.split()[0]
+        else: 
+            self.arg1 = "NOT IMPLEMENTED"
+
+
         return self.arg1
 
     def Arg2(self):
@@ -95,7 +99,7 @@ class Parser(object):
         """
         if self.commandType in (C_POP, C_PUSH, C_FUNCTION, C_CALL):
             self.arg2 = self.rawline.split()[2] 
-            print(self.arg2)
+            #print(self.arg2)
         elif self.commandType == C_ARITHMETIC:
             if self.arg1 in (T_AND, T_ADD, T_SUB, T_EQ,T_GT,T_LT,T_AND,T_OR):
                 self.arg2 == 0

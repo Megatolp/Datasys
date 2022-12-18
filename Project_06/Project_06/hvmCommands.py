@@ -63,7 +63,7 @@ T_TEMP = 'temp'
 #Might need to pdate
 #TODO
 SEGMENT_MAP = {
-    "pointer":0,
+    "stack-pointer":0,
     "local":1,
     "argument":2,
     "pointer":3,

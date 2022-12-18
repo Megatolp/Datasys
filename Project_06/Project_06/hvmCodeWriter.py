@@ -125,7 +125,6 @@ class CodeWriter(object):
 
     def WritePushPop(self, commandType, segment, index):
         if commandType == C_PUSH:
-            #print(segment)
             if segment == T_CONSTANT:
                 lines = [
                     f"@{index}",
@@ -163,7 +162,6 @@ class CodeWriter(object):
                     "@0",
                     "M=M+1"
                 ]
-                print(segment, index, lines)
             else:
                 # Open value at segment map, add {index} to value, then push to stack
                 lines = [
@@ -182,7 +180,6 @@ class CodeWriter(object):
                     "M=M+1"
                 ]
         elif commandType == C_POP:
-            #print(segment)
             if segment == "temp":
                 lines = [
                     # Gets first value before sp and saves to D
@@ -252,7 +249,6 @@ class CodeWriter(object):
         """
         
     def WriteArithmetic(self, command):
-        #print(command)
         arithmeticString = ""
         operand = ""
         arithmetic_table = {
@@ -312,7 +308,6 @@ class CodeWriter(object):
         elif command in (T_EQ, T_GT, T_LT):
             self.labelNumber += 1
             arithmeticString = conditional
-        #print(arithmeticString)
         self.file.write(arithmeticString)
             
 
@@ -338,6 +333,11 @@ class CodeWriter(object):
 
 
     def WriteLabel(self, label):
+        lines = [
+            f"({label})"
+        ]
+        for line in lines:
+            self.file.write(line + "\n")
         """
         Write Hack code for 'label' VM command.
 	To be implemented as part of Project 7
@@ -345,12 +345,31 @@ class CodeWriter(object):
         """
 
     def WriteGoto(self, label):
+        lines = [
+#            f"@{SEGMENT_MAP['stack-pointer']}",
+#            "AM=M-1",
+#            "D=M",
+            f"@{label}",
+            "D;JMP"
+        ]
+        for line in lines:
+            self.file.write(line + "\n")
         """
         Write Hack code for 'goto' VM command.
 	To be implemented as part of Project 7
         """
 
     def WriteIf(self, label):
+        # If at sp is 0 jump
+        lines = [
+        f"@{SEGMENT_MAP['stack-pointer']}", # Pop from sp
+        "AM=M-1",
+        "D=M", # Set D to val in arg 0
+        f"@{label}", # Open label
+        "D;JGT" # Jump if D>0
+        ]
+        for line in lines:
+            self.file.write(line + "\n")
         """
         Write Hack code for 'if-goto' VM command.
 	To be implemented as part of Project 7
