@@ -51,3 +51,10 @@ T_THIS = 'this'
 T_THAT = 'that'
 T_POINTER = 'pointer'
 T_TEMP = 'temp'
+
+SEGMENT_MAP = {
+    'local':'LCL',
+    'argument':'ARG',
+    'this':'THIS',
+    'that':'THAT'
+}

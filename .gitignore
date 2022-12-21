@@ -6,3 +6,4 @@ nand2tetris/tools/bin/CPU Emulator.dat
 Project_05/__pycache__/hasmParser.cpython-310.pyc
 nand2tetris/tools/bin/Virtual Machine Emulator.dat
 *.dat
+*.dat

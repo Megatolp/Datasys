@@ -42,29 +42,40 @@ class Parser(object):
                 return False
 
     def CommandType(self):
+        """
+        Returns the type of the current command:
         return self.commandType
-		
+		"""
+        return self.commandType
+
     def Arg1(self):
+        """
+        Returns the command's first argument.
+        """
         return self.arg1
 
     def Arg2(self):
+        """
+        Returns the command's second argument.
+        """
         return self.arg2
 
     def _Parse(self):
         # command [arg1 [arg2]]
 
+        # =============================================================
         parts = self.rawline.split()
         # Command type
         # Dictionary to translate word into command type
         commandtype_translator = {
-            T_PUSH:2,
-            T_POP:3,
-            T_LABEL:4,
-            T_GOTO:5,
-            T_IF : 6,
-            T_FUNCTION : 7,
-            T_RETURN : 8,
-            T_CALL : 9
+            T_PUSH : C_PUSH,
+            T_POP : C_POP,
+            T_LABEL : C_LABEL,
+            T_GOTO : C_GOTO,
+            T_IF : C_IF,
+            T_FUNCTION : C_FUNCTION,
+            T_RETURN : C_RETURN,
+            T_CALL : C_CALL
         }
         # Sets all arithmetic commands to 1
         for T_ARITHMETIC_COMMAND in T_ARITHMETIC:
@@ -73,20 +84,19 @@ class Parser(object):
         # Sets self.commandtype to corresponding integer
         T_COMMAND = parts[0]
         self.commandType = commandtype_translator[T_COMMAND]
-
-        
-
+        # =============================================================
         # Command 1
         # [add]  
         # arithmetic [add, sub, neg, etc.],
         if self.commandType == C_ARITHMETIC:
             self.arg1 = parts[0]
-
+        
         # push [local] 0 | call [func] 3
         # Push, Pop, Function, Call, Label, If, If-goto
         else:
             self.arg1 = self.rawline.split()[1]
-
+        # Cast to int
+        # =============================================================
         # Command 2
         # Only these use two commands
         # push local [2], call fund [3]
@@ -96,4 +106,7 @@ class Parser(object):
             self.arg2 = 0 
         else:
             self.arg2 = None
+        # Cast to int
+        self.arg2 = int(self.arg2)
+        # =============================================================
 
