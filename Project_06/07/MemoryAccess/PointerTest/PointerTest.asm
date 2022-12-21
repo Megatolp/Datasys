@@ -1,0 +1,133 @@
+@3030
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+@3
+D=A
+@0
+D=D+A
+@R13
+M=D
+@0
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+@3040
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+@3
+D=A
+@1
+D=D+A
+@R13
+M=D
+@0
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+@32
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+@3
+D=M
+@2
+D=D+A
+@R13
+M=D
+@0
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+@46
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+@4
+D=M
+@6
+D=D+A
+@R13
+M=D
+@0
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+@3
+D=M
+@0
+A=M
+M=D
+@0
+M=M+1
+@4
+D=M
+@0
+A=M
+M=D
+@0
+M=M+1
+
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        M=M+D
+        @3
+D=M
+@2
+D=D+A
+A=D
+D=M
+@0
+A=M
+M=D
+@0
+M=M+1
+
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        M=M-D
+        @4
+D=M
+@6
+D=D+A
+A=D
+D=M
+@0
+A=M
+M=D
+@0
+M=M+1
+
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        M=M+D
+        @_1
+(_1)
+0;JMP

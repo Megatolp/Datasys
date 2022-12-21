@@ -31,6 +31,13 @@ class List {
         return;
     }
 
+    method void insertInOrder(int insert){
+        var List current;
+        let current = this;
+        
+
+    }
+
     /** Disposes this List by recursively disposing its tail. */
     method void dispose() {
         if (~(next = null)) {

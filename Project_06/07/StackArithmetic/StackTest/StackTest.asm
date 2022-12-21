@@ -1,0 +1,313 @@
+@17
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+@17
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        D=M-D
+        M=-1
+        @label0
+        D;JEQ
+        @0
+        A=M-1
+        M=0
+        (label0)
+        @17
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+@16
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        D=M-D
+        M=-1
+        @label1
+        D;JEQ
+        @0
+        A=M-1
+        M=0
+        (label1)
+        @16
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+@17
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        D=M-D
+        M=-1
+        @label2
+        D;JEQ
+        @0
+        A=M-1
+        M=0
+        (label2)
+        @892
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+@891
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        D=M-D
+        M=-1
+        @label3
+        D;JLT
+        @0
+        A=M-1
+        M=0
+        (label3)
+        @891
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+@892
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        D=M-D
+        M=-1
+        @label4
+        D;JLT
+        @0
+        A=M-1
+        M=0
+        (label4)
+        @891
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+@891
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        D=M-D
+        M=-1
+        @label5
+        D;JLT
+        @0
+        A=M-1
+        M=0
+        (label5)
+        @32767
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+@32766
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        D=M-D
+        M=-1
+        @label6
+        D;JGT
+        @0
+        A=M-1
+        M=0
+        (label6)
+        @32766
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+@32767
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        D=M-D
+        M=-1
+        @label7
+        D;JGT
+        @0
+        A=M-1
+        M=0
+        (label7)
+        @32766
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+@32766
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        D=M-D
+        M=-1
+        @label8
+        D;JGT
+        @0
+        A=M-1
+        M=0
+        (label8)
+        @57
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+@31
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+@53
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        M=M+D
+        @112
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        M=M-D
+        
+        @0
+        A = M-1
+        M=-M
+        
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        M=M&D
+        @82
+D=A
+@0
+A=M
+M=D
+@0
+M=M+1
+
+        @0
+        AM=M-1
+        D=M
+        A=A-1
+        M=M|D
+        
+        @0
+        A = M-1
+        M=!M
+        @_10
+(_10)
+0;JMP
