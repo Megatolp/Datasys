@@ -1,220 +1,245 @@
+// Push constant 10
 @10
 D=A
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
-@1
+// Pop local 0
+@LCL
 D=M
 @0
 D=D+A
 @R13
 M=D
-@0
+@SP
 AM=M-1
 D=M
 @R13
 A=M
 M=D
+// Push constant 21
 @21
 D=A
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
+// Push constant 22
 @22
 D=A
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
-@2
+// Pop argument 2
+@ARG
 D=M
 @2
 D=D+A
 @R13
 M=D
-@0
+@SP
 AM=M-1
 D=M
 @R13
 A=M
 M=D
-@2
+// Pop argument 1
+@ARG
 D=M
 @1
 D=D+A
 @R13
 M=D
-@0
+@SP
 AM=M-1
 D=M
 @R13
 A=M
 M=D
+// Push constant 36
 @36
 D=A
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
-@3
+// Pop this 6
+@THIS
 D=M
 @6
 D=D+A
 @R13
 M=D
-@0
+@SP
 AM=M-1
 D=M
 @R13
 A=M
 M=D
+// Push constant 42
 @42
 D=A
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
+// Push constant 45
 @45
 D=A
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
-@4
+// Pop that 5
+@THAT
 D=M
 @5
 D=D+A
 @R13
 M=D
-@0
+@SP
 AM=M-1
 D=M
 @R13
 A=M
 M=D
-@4
+// Pop that 2
+@THAT
 D=M
 @2
 D=D+A
 @R13
 M=D
-@0
+@SP
 AM=M-1
 D=M
 @R13
 A=M
 M=D
+// Push constant 510
 @510
 D=A
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
+// Pop temp 6
+@5
+D=A
+@6
+A=D+A
+D=M
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+// Push local 0
+@LCL
+D=M
+@0
+A=D+A
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+// Push that 5
+@THAT
+D=M
+@5
+A=D+A
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+// add 
 @0
 AM=M-1
 D=M
-@11
-M=D
-@1
-D=M
-@0
-D=D+A
-A=D
-D=M
-@0
-A=M
-M=D
-@0
-M=M+1
-@4
-D=M
-@5
-D=D+A
-A=D
-D=M
-@0
-A=M
-M=D
-@0
-M=M+1
-
-        @0
-        AM=M-1
-        D=M
-        A=A-1
-        M=M+D
-        @2
+A=A-1
+M=M+D
+// Push argument 1
+@ARG
 D=M
 @1
 A=D+A
 D=M
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
-
-        @0
-        AM=M-1
-        D=M
-        A=A-1
-        M=M-D
-        @3
+// sub 
+@0
+AM=M-1
+D=M
+A=A-1
+M=M-D
+// Push this 6
+@THIS
 D=M
 @6
-D=D+A
-A=D
+A=D+A
 D=M
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
-@3
+// Push this 6
+@THIS
 D=M
 @6
-D=D+A
-A=D
+A=D+A
 D=M
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
-
-        @0
-        AM=M-1
-        D=M
-        A=A-1
-        M=M+D
-        
-        @0
-        AM=M-1
-        D=M
-        A=A-1
-        M=M-D
-        @11
-D=M
+// add 
 @0
+AM=M-1
+D=M
+A=A-1
+M=M+D
+// sub 
+@0
+AM=M-1
+D=M
+A=A-1
+M=M-D
+// Push temp 6
+@11
+A=M
+D=M
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
-
-        @0
-        AM=M-1
-        D=M
-        A=A-1
-        M=M+D
-        @_1
+// add 
+@0
+AM=M-1
+D=M
+A=A-1
+M=M+D
+@_1
 (_1)
 0;JMP

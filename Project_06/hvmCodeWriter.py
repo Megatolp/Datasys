@@ -128,9 +128,9 @@ class CodeWriter(object):
         if commandType == C_PUSH: # If push command
             self.Write(f"// Push {segment} {index}")
             code = ''
+            print(segment)
             if segment in SEGMENT_MAP.keys(): # Arg, Lcl, This, That
                 seg = SEGMENT_MAP[segment]
-                print(seg)
                 code = f'@{seg},D=M,@{index},A=D+A,D=M,@SP,A=M,M=D,@SP,M=M+1' 
             elif segment == T_CONSTANT:
                 code = f'@{index},D=A,@SP,A=M,M=D,@SP,M=M+1' 
@@ -142,7 +142,6 @@ class CodeWriter(object):
                 code = f'@This,D=A,@{index},A=D+A,D=M,@SP,A=M,M=D,@SP,M=M+1' 
 
             self._WriteCode(code)
-            pass
             
 
         else: # If pop command
@@ -151,13 +150,13 @@ class CodeWriter(object):
             if segment in SEGMENT_MAP.keys(): # Arg, Lcl, This, That
                 seg = SEGMENT_MAP[segment]
                 print(seg)
-                code = f'@{seg},D=M,f"{index},D=D+A, @R13, M=D, @SP, AM=M-1, D=M, @R13, A=M, M=D'
+                code = f'@{seg},D=M,@{index},D=D+A, @R13, M=D, @SP, AM=M-1, D=M, @R13, A=M, M=D'
             elif segment == T_STATIC:
                 code = f'@{self.fileName}.{index}, D=A , @R13, M=D, @SP, AM=M-1, D=M, @R13, A=M, M=D'
             elif segment in (T_TEMP):
-                code 
+                code =f'@5, D=A, @{index}, A=D+A, D=M, @R13, M=D, @SP, AM=M-1, D=M, @R13, A=M, M=D' 
             elif segment in (T_POINTER):
-                code = f'@This, D=A, @{index}, D=D+A, @R13, M=D, @SP, AM=M-1, D=M, @R13, A=M, M=D'
+                code = f'@THIS, D=A, @{index}, D=D+A, @R13, M=D, @SP, AM=M-1, D=M, @R13, A=M, M=D'
 
 
 
@@ -200,18 +199,43 @@ class CodeWriter(object):
 
         # operand = +, -, 
         operand = operator_table[command]
-        
+        lines = ""
         code_lines = [
             f"// {command} ", # Comment what it is writing
-
         ]
         if command in single_operand:
-            pass
+            lines = [
+            "@0",
+            "A = M-1",
+            f"M={operand}M"
+            ]
         elif command in simple_math:
-            pass
+            lines = [
+            "@0",
+            "AM=M-1",
+            "D=M",
+            "A=A-1",
+            f"M=M{operand}D",
+            ]
         elif command in conditional:
-            pass
-
+            lbl = self._UniqueLabel()
+            lines = [
+            "@0",
+            "AM=M-1",
+            "D=M",
+            "A=A-1",
+            "D=M-D",
+            "M=-1",
+            f"@label{lbl}",
+            f"D;{operand}",
+            "@0",
+            "A=M-1",
+            "M=0",
+            f"(label{lbl})"
+            ]
+        
+        for line in lines:
+            code_lines.append(line)
 
         for line in code_lines:
             self.Write(line)
