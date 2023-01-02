@@ -65,6 +65,7 @@ class Parser(object):
 
         # =============================================================
         parts = self.rawline.split()
+        print(parts)
         # Command type
         # Dictionary to translate word into command type
         commandtype_translator = {
@@ -91,9 +92,9 @@ class Parser(object):
         if self.commandType == C_ARITHMETIC:
             self.arg1 = parts[0]
         
-        # push [local] 0 | call [func] 3
+        # push [local] 0 | call [func] 3 | label [mylabel]
         # Push, Pop, Function, Call, Label, If, If-goto
-        else:
+        elif self.commandType != C_RETURN:
             self.arg1 = self.rawline.split()[1]
         # Cast to int
         # =============================================================
@@ -105,7 +106,7 @@ class Parser(object):
         elif self.commandType == C_ARITHMETIC: # For arithmetic commands
             self.arg2 = 0 
         else:
-            self.arg2 = None
+            self.arg2 = 0
         # Cast to int
         self.arg2 = int(self.arg2)
         # =============================================================

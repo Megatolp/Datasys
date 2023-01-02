@@ -326,7 +326,7 @@ class CodeWriter(object):
          The three comparison operators (EQ, LT and GT) do not exist in the assembly language. The corresponding assembly commands are the conditional jumps JEQ, JLT and JGT. You need to implement the VM operations using these conditional jumps. You need two labels, one for the true condition and one for the false condition and you have to put the correct result on the stack.
         """
         
-    def WriteInit(self, sysinit = True):
+    def WriteInit(self, sysinit = False):
         """
         Write the VM initialization code:
 	To be implemented as part of Project 7
@@ -397,8 +397,9 @@ class CodeWriter(object):
         # Set lcl to start of nVars
         # Push a return value to the stack
         self.WriteLabel(functionName)
-        for i in numLocals:
-            self.WritePushPop(C_PUSH,"constant",0)
+        print(numLocals)
+        for i in range(len(numLocals)):
+            self.WritePushPop(C_PUSH,"constant",i)
 
          
         
@@ -482,10 +483,6 @@ class CodeWriter(object):
             "D=M",
             "@1",
             "M=D",
-            
-
-            
-
         ]
         for line in lines:
             self.file.write(line + "\n")

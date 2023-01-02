@@ -1,122 +1,132 @@
+// Push constant 0
 @0
 D=A
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
-@1
+// Pop local 0
+@LCL
 D=M
 @0
 D=D+A
 @R13
 M=D
-@0
+@SP
 AM=M-1
 D=M
 @R13
 A=M
 M=D
+// Label LOOP_START
 (LOOP_START)
-@2
+// Push argument 0
+@ARG
 D=M
 @0
 A=D+A
 D=M
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
-@1
+// Push local 0
+@LCL
 D=M
 @0
-D=D+A
-A=D
+A=D+A
 D=M
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
-
-        @0
-        AM=M-1
-        D=M
-        A=A-1
-        M=M+D
-        @1
+// add 
+@0
+AM=M-1
+D=M
+A=A-1
+M=M+D
+// Pop local 0
+@LCL
 D=M
 @0
 D=D+A
 @R13
 M=D
-@0
+@SP
 AM=M-1
 D=M
 @R13
 A=M
 M=D
-@2
+// Push argument 0
+@ARG
 D=M
 @0
 A=D+A
 D=M
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
+// Push constant 1
 @1
 D=A
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
-
-        @0
-        AM=M-1
-        D=M
-        A=A-1
-        M=M-D
-        @2
+// sub 
+@0
+AM=M-1
+D=M
+A=A-1
+M=M-D
+// Pop argument 0
+@ARG
 D=M
 @0
 D=D+A
 @R13
 M=D
-@0
+@SP
 AM=M-1
 D=M
 @R13
 A=M
 M=D
-@2
+// Push argument 0
+@ARG
 D=M
 @0
 A=D+A
 D=M
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
-@0
+// If-goto LOOP_START
+@SP
 AM=M-1
 D=M
 @LOOP_START
 D;JGT
-@1
+// Push local 0
+@LCL
 D=M
 @0
-D=D+A
-A=D
+A=D+A
 D=M
-@0
+@SP
 A=M
 M=D
-@0
+@SP
 M=M+1
 @_1
 (_1)
