@@ -196,65 +196,45 @@ class CodeWriter(object):
 
         # operand = +, -, 
         operand = operator_table[command]
-        lines = ""
-        code_lines = [
-            f"// {command} ", # Comment what it is writing
-        ]
+        code = f"// {command} " # Comment what it is writing
         if command in single_operand:
-            lines = [
-            "@0",
-            "A = M-1",
-            f"M={operand}M"
-            ]
+            code += f"@SP, A=M-1, M={operand}M"
         elif command in simple_math:
-            lines = [
-            "@0",
-            "AM=M-1",
-            "D=M",
-            "A=A-1",
-            f"M=M{operand}D",
-            ]
+            code +=  f"@SP,AM=M-1,D=M,A=A-1, M=M{operand}D"
         elif command in conditional:
             lbl = self._UniqueLabel()
-            lines = [
-            "@0",
-            "AM=M-1",
-            "D=M",
-            "A=A-1",
-            "D=M-D",
-            "M=-1",
-            f"@label{lbl}",
-            f"D;{operand}",
-            "@0",
-            "A=M-1",
-            "M=0",
-            f"(label{lbl})"
-            ]
-        
-        for line in lines:
-            code_lines.append(line)
+            true_label = "TRUE" + lbl
+            cont_label = "CONT" + lbl
+            
+            #Base
+            code += f"@SP, AM=M-1, D=M, AM=M-1, D=M-D, @{true_label}, D;{command}"
 
-        for line in code_lines:
-            self.Write(line)
+            # False
+            code += f"@SP, A=M, M=0, @({cont_label}), 0;JMP"
+
+            #Cont
+            code += f"({true_label}), @SP, A=M, M=-1, ({cont_label}), @SP, M=M+1"
+        
+
+        self._WriteCode(code)
 
         
-    def WriteInit(self, sysinit = False):
+    def WriteInit(self, sysinit = True):
         """
         Write the VM initialization code:
 	To be implemented as part of Project 7
         """
         if (debug):
             self.file.write('    // Initialization code\n')
-        if sysinit:
-            code = ""
-            code += "@256, D=A, @0, M=D, "
+        if sysinit == True:
+            code = "@256, D=A, @0, M=D, "
             self._WriteCode(code)
             self.WriteCall("Sys.init", 0)
 
     def WriteLabel(self, label):
         code_lines = [
             f"// Label {label}", # Comment what to do
-            f"({label})"
+            f"({self._LocalLabel(label)})"
         ]
         for line in code_lines:
             self.Write(line)
@@ -262,7 +242,7 @@ class CodeWriter(object):
     def WriteGoto(self, label):
         code_lines = [
             f"// Goto {label}", # Comment what to do
-            f"@{label}",
+            f"@{self._LocalLabel(label)}",
             "0;JMP"
         ]
         for line in code_lines:
@@ -279,8 +259,8 @@ class CodeWriter(object):
             "@SP",
             "AM=M-1",
             "D=M",
-            f"@{label}",
-            "D;JGT" # JNE? säger annorlunda #
+            f"@{self._LocalLabel(label)}",
+            "D;JNE" # JNE? säger annorlunda #
         ]
         for line in code_lines:
             self.Write(line)
@@ -297,7 +277,7 @@ class CodeWriter(object):
 	To be implemented as part of Project 7
         """
         self.Write(f"// Function {functionName} {numLocals}")
-        self.WriteLabel(functionName)
+        self.Write(f"({functionName})")
         for i in range(int(numLocals)):
             self.WritePushPop(C_PUSH, T_CONSTANT, 0)
 
@@ -346,8 +326,6 @@ class CodeWriter(object):
 
         self._WriteCode(code)
 
-        #Reset function name
-        self.functionName = None
         
 
     def WriteCall(self, functionName, numArgs):
@@ -359,7 +337,7 @@ class CodeWriter(object):
             return f"@{seg},D=M,@SP,A=M,M=D,@0,M=M+1, "
             
 
-        ret_addr = functionName + "$ret" + self._UniqueLabel()
+        ret_addr =  self._LocalLabel("ret." + self._UniqueLabel())
 
 
 
@@ -395,7 +373,7 @@ class CodeWriter(object):
         self._WriteCode(code)
         
         # (Ret addr)
-        self.WriteLabel(ret_addr)
+        self.Write(f"({ret_addr})")
     
 
     
