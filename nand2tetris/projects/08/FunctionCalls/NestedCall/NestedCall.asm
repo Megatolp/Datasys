@@ -4,8 +4,8 @@ D=A
 M=D
 
 // Call Sys.init 0
-@_1
-D=M
+@Sys.init$ret_1
+D=A
 @SP
 A=M
 M=D
@@ -52,8 +52,8 @@ M=D
 @Sys.init
 0;JMP
 
-// Label _1
-(_1)
+// Label Sys.init$ret_1
+(Sys.init$ret_1)
 // Function Sys.init 0
 // Label Sys.init
 (Sys.init)
@@ -66,6 +66,18 @@ M=D
 @SP
 M=M+1
 // Pop pointer 0
+@THIS
+D=A
+@0
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
 // Push constant 5000
 @5000
 D=A
@@ -75,9 +87,21 @@ M=D
 @SP
 M=M+1
 // Pop pointer 1
-// Call Sys.main 0
-@_2
+@THIS
+D=A
+@1
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
 D=M
+@R13
+A=M
+M=D
+// Call Sys.main 0
+@Sys.main$ret_2
+D=A
 @SP
 A=M
 M=D
@@ -124,9 +148,21 @@ M=D
 @Sys.main
 0;JMP
 
-// Label _2
-(_2)
+// Label Sys.main$ret_2
+(Sys.main$ret_2)
 // Pop temp 1
+@5
+D=A
+@1
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
 // Label LOOP
 (LOOP)
 // Goto LOOP
@@ -184,6 +220,18 @@ M=D
 @SP
 M=M+1
 // Pop pointer 0
+@THIS
+D=A
+@0
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
 // Push constant 5001
 @5001
 D=A
@@ -193,6 +241,18 @@ M=D
 @SP
 M=M+1
 // Pop pointer 1
+@THIS
+D=A
+@1
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
 // Push constant 200
 @200
 D=A
@@ -202,6 +262,18 @@ M=D
 @SP
 M=M+1
 // Pop local 1
+@LCL
+D=M
+@1
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
 // Push constant 40
 @40
 D=A
@@ -211,6 +283,18 @@ M=D
 @SP
 M=M+1
 // Pop local 2
+@LCL
+D=M
+@2
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
 // Push constant 6
 @6
 D=A
@@ -220,6 +304,18 @@ M=D
 @SP
 M=M+1
 // Pop local 3
+@LCL
+D=M
+@3
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
 // Push constant 123
 @123
 D=A
@@ -229,8 +325,8 @@ M=D
 @SP
 M=M+1
 // Call Sys.add12 1
-@_3
-D=M
+@Sys.add12$ret_3
+D=A
 @SP
 A=M
 M=D
@@ -277,9 +373,21 @@ M=D
 @Sys.add12
 0;JMP
 
-// Label _3
-(_3)
+// Label Sys.add12$ret_3
+(Sys.add12$ret_3)
 // Pop temp 0
+@5
+D=A
+@0
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
 // Push local 0
 @LCL
 D=M
@@ -424,6 +532,18 @@ M=D
 @SP
 M=M+1
 // Pop pointer 0
+@THIS
+D=A
+@0
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
 // Push constant 5002
 @5002
 D=A
@@ -433,6 +553,18 @@ M=D
 @SP
 M=M+1
 // Pop pointer 1
+@THIS
+D=A
+@1
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
 // Push argument 0
 @ARG
 D=M

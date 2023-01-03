@@ -128,7 +128,6 @@ class CodeWriter(object):
         if commandType == C_PUSH: # If push command
             self.Write(f"// Push {segment} {index}")
             code = ''
-            #print(segment)
             if segment in SEGMENT_MAP.keys(): # Arg, Lcl, This, That
                 seg = SEGMENT_MAP[segment]
                 code = f'@{seg},D=M,@{index},A=D+A,D=M,@SP,A=M,M=D,@SP,M=M+1' 
@@ -136,12 +135,10 @@ class CodeWriter(object):
                 code = f'@{index},D=A,@SP,A=M,M=D,@SP,M=M+1' 
             elif segment == T_STATIC:
                 code = f'@{self.fileName}.{index},D=M,@SP,A=M,M=D,@SP,M=M+1' 
-            elif segment in (T_TEMP):
+            elif segment == T_TEMP:
                 code = f'@{5 + index},A=M,D=M,@SP,A=M,M=D,@SP,M=M+1' 
-            elif segment in (T_POINTER):
+            elif segment == T_POINTER:
                 code = f'@THIS,D=A,@{index},A=D+A,D=M,@SP,A=M,M=D,@SP,M=M+1' 
-
-            self._WriteCode(code)
             
 
         elif commandType == C_POP: # If pop command
@@ -149,20 +146,19 @@ class CodeWriter(object):
             code = ''
             if segment in SEGMENT_MAP.keys(): # Arg, Lcl, This, That
                 seg = SEGMENT_MAP[segment]
-                #print(seg)
                 code = f'@{seg},D=M,@{index},D=D+A, @R13, M=D, @SP, AM=M-1, D=M, @R13, A=M, M=D'
             elif segment == T_STATIC:
                 code = f'@{self.fileName}.{index}, D=A , @R13, M=D, @SP, AM=M-1, D=M, @R13, A=M, M=D'
-            elif segment in (T_TEMP):
-                code =f'@5, D=A, @{index}, A=D+A, D=M, @R13, M=D, @SP, AM=M-1, D=M, @R13, A=M, M=D' 
-            elif segment in (T_POINTER):
+            elif segment == T_TEMP:
+                code =f'@5, D=A, @{index}, D=D+A, @R13, M=D, @SP, AM=M-1, D=M, @R13, A=M, M=D' 
+            elif segment == T_POINTER:
                 code = f'@THIS, D=A, @{index}, D=D+A, @R13, M=D, @SP, AM=M-1, D=M, @R13, A=M, M=D'
         else:
             print("NOPUSHPOP")
 
 
 
-            self._WriteCode(code)
+        self._WriteCode(code)
             
         """
         Write Hack code for 'commandType' (C_PUSH or C_POP).
@@ -242,7 +238,7 @@ class CodeWriter(object):
             self.Write(line)
 
         
-    def WriteInit(self, sysinit = True):
+    def WriteInit(self, sysinit = False):
         """
         Write the VM initialization code:
 	To be implemented as part of Project 7
@@ -295,6 +291,7 @@ class CodeWriter(object):
         
 
     def WriteFunction(self, functionName, numLocals):
+        self.functionName =  functionName
         """
         Write Hack code for 'function' VM command.
 	To be implemented as part of Project 7
@@ -348,6 +345,9 @@ class CodeWriter(object):
         code += "@R15, A=M, 0;JMP"
 
         self._WriteCode(code)
+
+        #Reset function name
+        self.functionName = None
         
 
     def WriteCall(self, functionName, numArgs):
@@ -359,14 +359,16 @@ class CodeWriter(object):
             return f"@{seg},D=M,@SP,A=M,M=D,@0,M=M+1, "
             
 
-        ret_addr = self._UniqueLabel()
+        ret_addr = functionName + "$ret" + self._UniqueLabel()
+
 
 
         self.Write(f"// Call {functionName} {numArgs}")
         code = ""
+
         # Push ret address
-        code += push_seg(ret_addr)
-            #code += f"@{ret_addr},D=A,@SP,A=M,M=D,@0,M=M+1" IF ERRORS later
+        #code += push_seg(ret_addr)
+        code += f"@{ret_addr},D=A,@SP,A=M,M=D,@0,M=M+1, " #IF ERRORS later
 
         # Push LCL
         code += push_seg("LCL")

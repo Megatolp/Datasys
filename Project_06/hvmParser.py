@@ -65,7 +65,7 @@ class Parser(object):
 
         # =============================================================
         parts = self.rawline.split()
-        print(parts)
+        #print(parts)
         # Command type
         # Dictionary to translate word into command type
         commandtype_translator = {
