@@ -175,6 +175,7 @@ class CodeWriter(object):
         """
         
     def WriteArithmetic(self, command):
+        print(command)
         # command of type "add", "not"
         operator_table = {
             #One operand
@@ -193,27 +194,26 @@ class CodeWriter(object):
         single_operand = ("neg", "not")
         simple_math = ("add","sub","and","or")
         conditional = ("JEQ","JGT","JLT")
-
         # operand = +, -, 
         operand = operator_table[command]
-        code = f"// {command} " # Comment what it is writing
+        code = f"// {command}, " # Comment what it is writing
         if command in single_operand:
-            code += f"@SP, A=M-1, M={operand}M"
+            code += f"@SP, A=M-1, M={operand}M, "
         elif command in simple_math:
-            code +=  f"@SP,AM=M-1,D=M,A=A-1, M=M{operand}D"
-        elif command in conditional:
+            code +=  f"@SP,AM=M-1,D=M,A=A-1, M=M{operand}D, "
+        elif operand in conditional:
             lbl = self._UniqueLabel()
-            true_label = "TRUE" + lbl
-            cont_label = "CONT" + lbl
+            true_label = self._LocalLabel("TRUE" + lbl)
+            cont_label = self._LocalLabel("CONT" + lbl)
             
             #Base
-            code += f"@SP, AM=M-1, D=M, AM=M-1, D=M-D, @{true_label}, D;{command}"
+            code += f"@SP, AM=M-1, D=M, AM=M-1, D=M-D, @{true_label}, D;{operand}, "
 
             # False
-            code += f"@SP, A=M, M=0, @({cont_label}), 0;JMP"
+            code += f"@SP, A=M, M=0, @{cont_label}, 0;JMP, "
 
             #Cont
-            code += f"({true_label}), @SP, A=M, M=-1, ({cont_label}), @SP, M=M+1"
+            code += f"({true_label}), @SP, A=M, M=-1, ({cont_label}), @SP, M=M+1, "
         
 
         self._WriteCode(code)
@@ -309,8 +309,7 @@ class CodeWriter(object):
         code += "@ARG, D=M, @SP, M=D+1, "
 
         # THAT = *(endFrame - 1)
-        code += pop_seg("THAT", 1)
-
+        code += f"@R14, A=M-1, D=M, @THAT, M=D, "
         # THIS = *(endFrame - 2)
         code += pop_seg("THIS", 2)
 
