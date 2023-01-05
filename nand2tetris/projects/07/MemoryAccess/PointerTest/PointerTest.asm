@@ -83,7 +83,7 @@ D=M
 A=M
 M=D
 // Push pointer 0
-@This
+@THIS
 D=A
 @0
 A=D+A
@@ -94,7 +94,7 @@ M=D
 @SP
 M=M+1
 // Push pointer 1
-@This
+@THIS
 D=A
 @1
 A=D+A
@@ -104,12 +104,13 @@ A=M
 M=D
 @SP
 M=M+1
-// add 
-@0
+//add
+@SP
 AM=M-1
 D=M
 A=A-1
 M=M+D
+
 // Push this 2
 @THIS
 D=M
@@ -121,12 +122,13 @@ A=M
 M=D
 @SP
 M=M+1
-// sub 
-@0
+//sub
+@SP
 AM=M-1
 D=M
 A=A-1
 M=M-D
+
 // Push that 6
 @THAT
 D=M
@@ -138,12 +140,13 @@ A=M
 M=D
 @SP
 M=M+1
-// add 
-@0
+//add
+@SP
 AM=M-1
 D=M
 A=A-1
 M=M+D
+
 @_1
 (_1)
 0;JMP

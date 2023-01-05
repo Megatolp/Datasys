@@ -20,7 +20,7 @@ D=M
 A=M
 M=D
 // Label LOOP_START
-(LOOP_START)
+(BasicLoop$$LOOP_START)
 // Push argument 0
 @ARG
 D=M
@@ -43,12 +43,13 @@ A=M
 M=D
 @SP
 M=M+1
-// add 
-@0
+//add
+@SP
 AM=M-1
 D=M
 A=A-1
 M=M+D
+
 // Pop local 0
 @LCL
 D=M
@@ -81,12 +82,13 @@ A=M
 M=D
 @SP
 M=M+1
-// sub 
-@0
+//sub
+@SP
 AM=M-1
 D=M
 A=A-1
 M=M-D
+
 // Pop argument 0
 @ARG
 D=M
@@ -115,8 +117,8 @@ M=M+1
 @SP
 AM=M-1
 D=M
-@LOOP_START
-D;JGT
+@BasicLoop$$LOOP_START
+D;JNE
 // Push local 0
 @LCL
 D=M

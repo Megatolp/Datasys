@@ -4,7 +4,7 @@ D=A
 M=D
 
 // Call Sys.init 0
-@_1
+@StaticsTest$$ret._1
 D=A
 @SP
 A=M
@@ -52,10 +52,8 @@ M=D
 @Sys.init
 0;JMP
 
-// Label _1
-(_1)
+(StaticsTest$$ret._1)
 // Function Class1.set 0
-// Label Class1.set
 (Class1.set)
 // Push argument 0
 @ARG
@@ -114,10 +112,10 @@ M=M+1
 D=M
 @R14
 M=D
-@R14
-D=M
 @5
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @R15
 M=D
@@ -128,34 +126,32 @@ D=M
 A=M
 M=D
 @ARG
-D=M
+D=M+1
 @SP
-M=D+1
+M=D
 @R14
-D=M
-@1
-A=D-A
+A=M-1
 D=M
 @THAT
 M=D
-@R14
-D=M
 @2
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @THIS
 M=D
-@R14
-D=M
 @3
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @ARG
 M=D
-@R14
-D=M
 @4
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @LCL
 M=D
@@ -163,7 +159,6 @@ M=D
 A=M
 0;JMP
 // Function Class1.get 0
-// Label Class1.get
 (Class1.get)
 // Push static 0
 @Class1.0
@@ -181,21 +176,22 @@ A=M
 M=D
 @SP
 M=M+1
-// sub 
-@0
+//sub
+@SP
 AM=M-1
 D=M
 A=A-1
 M=M-D
+
 // Return
 @LCL
 D=M
 @R14
 M=D
-@R14
-D=M
 @5
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @R15
 M=D
@@ -206,34 +202,32 @@ D=M
 A=M
 M=D
 @ARG
-D=M
+D=M+1
 @SP
-M=D+1
+M=D
 @R14
-D=M
-@1
-A=D-A
+A=M-1
 D=M
 @THAT
 M=D
-@R14
-D=M
 @2
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @THIS
 M=D
-@R14
-D=M
 @3
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @ARG
 M=D
-@R14
-D=M
 @4
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @LCL
 M=D
@@ -241,7 +235,6 @@ M=D
 A=M
 0;JMP
 // Function Class2.set 0
-// Label Class2.set
 (Class2.set)
 // Push argument 0
 @ARG
@@ -300,10 +293,10 @@ M=M+1
 D=M
 @R14
 M=D
-@R14
-D=M
 @5
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @R15
 M=D
@@ -314,34 +307,32 @@ D=M
 A=M
 M=D
 @ARG
-D=M
+D=M+1
 @SP
-M=D+1
+M=D
 @R14
-D=M
-@1
-A=D-A
+A=M-1
 D=M
 @THAT
 M=D
-@R14
-D=M
 @2
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @THIS
 M=D
-@R14
-D=M
 @3
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @ARG
 M=D
-@R14
-D=M
 @4
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @LCL
 M=D
@@ -349,7 +340,6 @@ M=D
 A=M
 0;JMP
 // Function Class2.get 0
-// Label Class2.get
 (Class2.get)
 // Push static 0
 @Class2.0
@@ -367,21 +357,22 @@ A=M
 M=D
 @SP
 M=M+1
-// sub 
-@0
+//sub
+@SP
 AM=M-1
 D=M
 A=A-1
 M=M-D
+
 // Return
 @LCL
 D=M
 @R14
 M=D
-@R14
-D=M
 @5
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @R15
 M=D
@@ -392,34 +383,32 @@ D=M
 A=M
 M=D
 @ARG
-D=M
+D=M+1
 @SP
-M=D+1
+M=D
 @R14
-D=M
-@1
-A=D-A
+A=M-1
 D=M
 @THAT
 M=D
-@R14
-D=M
 @2
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @THIS
 M=D
-@R14
-D=M
 @3
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @ARG
 M=D
-@R14
-D=M
 @4
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @LCL
 M=D
@@ -427,7 +416,6 @@ M=D
 A=M
 0;JMP
 // Function Sys.init 0
-// Label Sys.init
 (Sys.init)
 // Push constant 6
 @6
@@ -446,7 +434,7 @@ M=D
 @SP
 M=M+1
 // Call Class1.set 2
-@_2
+@Sys.init$ret._2
 D=A
 @SP
 A=M
@@ -494,13 +482,10 @@ M=D
 @Class1.set
 0;JMP
 
-// Label _2
-(_2)
+(Sys.init$ret._2)
 // Pop temp 0
 @5
 D=A
-@0
-D=D+A
 @R13
 M=D
 @SP
@@ -526,7 +511,7 @@ M=D
 @SP
 M=M+1
 // Call Class2.set 2
-@_3
+@Sys.init$ret._3
 D=A
 @SP
 A=M
@@ -574,13 +559,10 @@ M=D
 @Class2.set
 0;JMP
 
-// Label _3
-(_3)
+(Sys.init$ret._3)
 // Pop temp 0
 @5
 D=A
-@0
-D=D+A
 @R13
 M=D
 @SP
@@ -590,7 +572,7 @@ D=M
 A=M
 M=D
 // Call Class1.get 0
-@_4
+@Sys.init$ret._4
 D=A
 @SP
 A=M
@@ -638,10 +620,9 @@ M=D
 @Class1.get
 0;JMP
 
-// Label _4
-(_4)
+(Sys.init$ret._4)
 // Call Class2.get 0
-@_5
+@Sys.init$ret._5
 D=A
 @SP
 A=M
@@ -689,12 +670,11 @@ M=D
 @Class2.get
 0;JMP
 
-// Label _5
-(_5)
+(Sys.init$ret._5)
 // Label WHILE
-(WHILE)
+(Sys.init$WHILE)
 // Goto WHILE
-@WHILE
+@Sys.init$WHILE
 0;JMP
 @_6
 (_6)

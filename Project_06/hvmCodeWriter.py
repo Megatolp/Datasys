@@ -136,7 +136,7 @@ class CodeWriter(object):
             elif segment == T_STATIC:
                 code = f'@{self.fileName}.{index},D=M,@SP,A=M,M=D,@SP,M=M+1' 
             elif segment == T_TEMP:
-                code = f'@{5 + index},A=M,D=M,@SP,A=M,M=D,@SP,M=M+1' 
+                code = f'@{5 + index},D=M,@SP,A=M,M=D,@SP,M=M+1' 
             elif segment == T_POINTER:
                 code = f'@THIS,D=A,@{index},A=D+A,D=M,@SP,A=M,M=D,@SP,M=M+1' 
             
@@ -150,7 +150,7 @@ class CodeWriter(object):
             elif segment == T_STATIC:
                 code = f'@{self.fileName}.{index}, D=A , @R13, M=D, @SP, AM=M-1, D=M, @R13, A=M, M=D'
             elif segment == T_TEMP:
-                code =f'@5, D=A, @{index}, D=D+A, @R13, M=D, @SP, AM=M-1, D=M, @R13, A=M, M=D' 
+                code =f'@{index + 5}, D=A, @R13, M=D, @SP, AM=M-1, D=M, @R13, A=M, M=D' 
             elif segment == T_POINTER:
                 code = f'@THIS, D=A, @{index}, D=D+A, @R13, M=D, @SP, AM=M-1, D=M, @R13, A=M, M=D'
         else:
@@ -207,7 +207,7 @@ class CodeWriter(object):
             cont_label = self._LocalLabel("CONT" + lbl)
             
             #Base
-            code += f"@SP, AM=M-1, D=M, AM=M-1, D=M-D, @{true_label}, D;{operand}, "
+            code += f"@SP, AM=M-1, D=M, @SP, AM=M-1, D=M-D, @{true_label}, D;{operand}, "
 
             # False
             code += f"@SP, A=M, M=0, @{cont_label}, 0;JMP, "
@@ -288,7 +288,7 @@ class CodeWriter(object):
 	To be implemented as part of Project 7
         """
         def pop_seg(seg, offset):
-            return f"@R14, D=M, @{offset}, A=D-A, D=M, @{seg}, M=D, "
+            return f"@{offset}, D=A, @R14, A=M-D, D=M, @{seg}, M=D, "
 
         
         # endFrame = R14
@@ -300,13 +300,13 @@ class CodeWriter(object):
         code += "@LCL, D=M, @R14, M=D, "
 
         # retAddr [R15]= *( endframe - 5)
-        code += "@R14, D=M, @5, A=D-A, D=M, @R15, M=D, "
+        code += "@5, D=A, @R14, A=M-D, D=M, @R15, M=D, "
 
         # *ARG = pop()
         code += "@SP, AM=M-1, D=M, @ARG, A=M, M=D, "
 
         # SP = ARG + 1
-        code += "@ARG, D=M, @SP, M=D+1, "
+        code += "@ARG, D=M+1, @SP, M=D, "
 
         # THAT = *(endFrame - 1)
         code += f"@R14, A=M-1, D=M, @THAT, M=D, "

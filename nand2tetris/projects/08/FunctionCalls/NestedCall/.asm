@@ -4,7 +4,7 @@ D=A
 M=D
 
 // Call Sys.init 0
-@NestedCall$$ret._1
+@.asm$$ret._1
 D=A
 @SP
 A=M
@@ -52,7 +52,7 @@ M=D
 @Sys.init
 0;JMP
 
-(NestedCall$$ret._1)
+(.asm$$ret._1)
 // Function Sys.init 0
 (Sys.init)
 // Push constant 4000
@@ -148,8 +148,10 @@ M=D
 
 (Sys.init$ret._2)
 // Pop temp 1
-@6
+@5
 D=A
+@1
+D=D+A
 @R13
 M=D
 @SP
@@ -371,6 +373,8 @@ M=D
 // Pop temp 0
 @5
 D=A
+@0
+D=D+A
 @R13
 M=D
 @SP

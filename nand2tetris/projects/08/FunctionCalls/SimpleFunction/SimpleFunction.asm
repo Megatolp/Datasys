@@ -1,5 +1,4 @@
 // Function SimpleFunction.test 2
-// Label SimpleFunction.test
 (SimpleFunction.test)
 // Push constant 0
 @0
@@ -39,16 +38,18 @@ A=M
 M=D
 @SP
 M=M+1
-// add 
-@0
+//add
+@SP
 AM=M-1
 D=M
 A=A-1
 M=M+D
-// not 
-@0
-A = M-1
+
+//not
+@SP
+A=M-1
 M=!M
+
 // Push argument 0
 @ARG
 D=M
@@ -60,12 +61,13 @@ A=M
 M=D
 @SP
 M=M+1
-// add 
-@0
+//add
+@SP
 AM=M-1
 D=M
 A=A-1
 M=M+D
+
 // Push argument 1
 @ARG
 D=M
@@ -77,21 +79,22 @@ A=M
 M=D
 @SP
 M=M+1
-// sub 
-@0
+//sub
+@SP
 AM=M-1
 D=M
 A=A-1
 M=M-D
+
 // Return
 @LCL
 D=M
 @R14
 M=D
-@R14
-D=M
 @5
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @R15
 M=D
@@ -102,34 +105,32 @@ D=M
 A=M
 M=D
 @ARG
-D=M
+D=M+1
 @SP
-M=D+1
+M=D
 @R14
-D=M
-@1
-A=D-A
+A=M-1
 D=M
 @THAT
 M=D
-@R14
-D=M
 @2
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @THIS
 M=D
-@R14
-D=M
 @3
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @ARG
 M=D
-@R14
-D=M
 @4
-A=D-A
+D=A
+@R14
+A=M-D
 D=M
 @LCL
 M=D

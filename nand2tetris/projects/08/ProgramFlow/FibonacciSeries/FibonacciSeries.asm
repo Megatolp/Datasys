@@ -1,59 +1,3 @@
-@256
-D=A
-@0
-M=D
-
-// Call Sys.init 0
-@_1
-D=A
-@SP
-A=M
-M=D
-@0
-M=M+1
-@LCL
-D=M
-@SP
-A=M
-M=D
-@0
-M=M+1
-@ARG
-D=M
-@SP
-A=M
-M=D
-@0
-M=M+1
-@THIS
-D=M
-@SP
-A=M
-M=D
-@0
-M=M+1
-@THAT
-D=M
-@SP
-A=M
-M=D
-@0
-M=M+1
-@5
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-D=M
-@LCL
-M=D
-@Sys.init
-0;JMP
-
-// Label _1
-(_1)
 // Push argument 1
 @ARG
 D=M
@@ -139,12 +83,13 @@ A=M
 M=D
 @SP
 M=M+1
-// sub 
-@0
+//sub
+@SP
 AM=M-1
 D=M
 A=A-1
 M=M-D
+
 // Pop argument 0
 @ARG
 D=M
@@ -159,7 +104,7 @@ D=M
 A=M
 M=D
 // Label MAIN_LOOP_START
-(MAIN_LOOP_START)
+(FibonacciSeries$$MAIN_LOOP_START)
 // Push argument 0
 @ARG
 D=M
@@ -175,13 +120,13 @@ M=M+1
 @SP
 AM=M-1
 D=M
-@COMPUTE_ELEMENT
-D;JGT
+@FibonacciSeries$$COMPUTE_ELEMENT
+D;JNE
 // Goto END_PROGRAM
-@END_PROGRAM
+@FibonacciSeries$$END_PROGRAM
 0;JMP
 // Label COMPUTE_ELEMENT
-(COMPUTE_ELEMENT)
+(FibonacciSeries$$COMPUTE_ELEMENT)
 // Push that 0
 @THAT
 D=M
@@ -204,12 +149,13 @@ A=M
 M=D
 @SP
 M=M+1
-// add 
-@0
+//add
+@SP
 AM=M-1
 D=M
 A=A-1
 M=M+D
+
 // Pop that 2
 @THAT
 D=M
@@ -242,12 +188,13 @@ A=M
 M=D
 @SP
 M=M+1
-// add 
-@0
+//add
+@SP
 AM=M-1
 D=M
 A=A-1
 M=M+D
+
 // Pop pointer 1
 @THIS
 D=A
@@ -280,12 +227,13 @@ A=M
 M=D
 @SP
 M=M+1
-// sub 
-@0
+//sub
+@SP
 AM=M-1
 D=M
 A=A-1
 M=M-D
+
 // Pop argument 0
 @ARG
 D=M
@@ -300,10 +248,10 @@ D=M
 A=M
 M=D
 // Goto MAIN_LOOP_START
-@MAIN_LOOP_START
+@FibonacciSeries$$MAIN_LOOP_START
 0;JMP
 // Label END_PROGRAM
-(END_PROGRAM)
-@_2
-(_2)
+(FibonacciSeries$$END_PROGRAM)
+@_1
+(_1)
 0;JMP
